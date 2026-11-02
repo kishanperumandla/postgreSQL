@@ -2,11 +2,12 @@ import "dotenv/config";
 import cors from "cors";
 import express from "express";
 import { pool } from "./db";
+import { usersRouter } from "./routes/users";
 
 const app = express();
 const port = Number(process.env.PORT) || 3000;
 
-// app.disable("x-powered-by");
+app.disable("x-powered-by");
 
 app.use(cors());
 app.use(express.json());
@@ -20,6 +21,8 @@ app.get("/health", async (_req, res) => {
     res.status(503).json({ status: "error", db: "down" });
   }
 });
+
+app.use("/users", usersRouter);
 
 app.listen(port, () => {
   console.log(`API listening on http://localhost:${port}`);
