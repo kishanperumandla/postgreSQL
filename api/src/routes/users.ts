@@ -2,9 +2,16 @@ import { Router } from "express";
 import { pool } from "../db";
 
 import { z } from "zod";
+import { hash } from "bcryptjs";
 
 const idParamSchema = z.object({
   id: z.coerce.number().int().positive().max(2147483647),
+});
+
+const createUserSchema = z.object({
+  name: z.string().trim().min(1).max(100),
+  email: z.email().max(100),
+  password: z.string().min(8).max(72),
 });
 
 export const usersRouter = Router();
@@ -36,6 +43,34 @@ usersRouter.get("/:id", async (req, res, next) => {
     }
     res.json(user);
   } catch (err) {
+    next(err);
+  }
+});
+
+//  Create user
+usersRouter.post("/", async (req, res, next) => {
+  const parsed = createUserSchema.safeParse(req.body);
+  if (!parsed.success) {
+    res.status(400).json({
+      error: "Invalid user data",
+      details: z.flattenError(parsed.error).fieldErrors,
+    });
+    return;
+  }
+
+  const { name, email, password } = parsed.data;
+  try {
+    const passwordHash = await hash(password, 10);
+    const result = await pool.query(
+      "INSERT INTO users (name, email, password) VALUES ($1, $2, $3) RETURNING id, name, email",
+      [name, email, passwordHash],
+    );
+    res.status(201).json(result.rows[0]);
+  } catch (err) {
+    if (err instanceof Error && "code" in err && err.code === "23505") {
+      res.status(409).json({ error: "Email already exists" });
+      return;
+    }
     next(err);
   }
 });
