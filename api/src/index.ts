@@ -4,9 +4,9 @@ import express from "express";
 import { pool } from "./db";
 import { usersRouter } from "./routes/users";
 import { ordersRouter } from "./routes/orders";
-
 const app = express();
 const port = Number(process.env.PORT) || 3000;
+import { errorHandler, notFound } from "./middleware/errorHandler";
 
 app.disable("x-powered-by");
 
@@ -29,3 +29,6 @@ app.use("/orders", ordersRouter);
 app.listen(port, () => {
   console.log(`API listening on http://localhost:${port}`);
 });
+
+app.use(notFound);
+app.use(errorHandler);
