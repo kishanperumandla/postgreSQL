@@ -1,34 +1,25 @@
-import "dotenv/config";
-import cors from "cors";
-import express from "express";
+import { createApp } from "./app";
+import { env } from "./config/env";
 import { pool } from "./db";
-import { usersRouter } from "./routes/users";
-import { ordersRouter } from "./routes/orders";
-const app = express();
-const port = Number(process.env.PORT) || 3000;
-import { errorHandler, notFound } from "./middleware/errorHandler";
 
-app.disable("x-powered-by");
-
-app.use(cors());
-app.use(express.json());
-
-app.get("/health", async (_req, res) => {
-  try {
-    await pool.query("SELECT 1");
-    res.json({ status: "ok", db: "up" });
-  } catch (err) {
-    console.error(err);
-    res.status(503).json({ status: "error", db: "down" });
-  }
+const server = createApp().listen(env.PORT, () => {
+  console.log(`API listening on http://localhost:${env.PORT}`);
 });
 
-app.use("/users", usersRouter);
-app.use("/orders", ordersRouter);
+// GRACEFUL SHUTDOWN. Deploys, `tsx watch` restarts and Ctrl+C send SIGTERM/SIGINT.
+// Steps: stop accepting new connections -> let in-flight requests finish -> close DB connections -> exit.
+// IF SKIPPED: the process dies mid-request (clients get dropped connections / half-finished
+// writes) and Postgres is left holding connections until they time out.
+function shutdown(signal: string) {
+  console.log(`${signal} received, shutting down...`);
+  server.close(async () => {
+    await pool.end();
+    process.exit(0);
+  });
+  // Safety net: if something hangs (a stuck keep-alive connection), force exit after 10 s.
+  // unref() so this timer alone never keeps the process alive.
+  setTimeout(() => process.exit(1), 10_000).unref();
+}
 
-app.listen(port, () => {
-  console.log(`API listening on http://localhost:${port}`);
-});
-
-app.use(notFound);
-app.use(errorHandler);
+process.on("SIGTERM", () => shutdown("SIGTERM"));
+process.on("SIGINT", () => shutdown("SIGINT"));
