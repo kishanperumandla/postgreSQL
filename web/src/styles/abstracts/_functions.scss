@@ -1,0 +1,5 @@
+// spacing(2) -> 16px. Keeps spacing on an 8px grid: use spacing(n) instead of ad-hoc pixel values.
+// (This file was named " _functions.scss" with a leading space in the boilerplate repo; fixed here.)
+@function spacing($value) {
+  @return $value * 8px;
+}

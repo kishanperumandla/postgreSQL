@@ -1,0 +1,28 @@
+@use "../abstracts/variables" as *;
+@use "../abstracts/mixins" as *;
+
+body {
+  color: $text-color;
+  background: $bg-color;
+  position: relative;
+}
+
+// The React root fills the screen so the footer can sit at the bottom on short pages.
+#root {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+a {
+  color: $primary-color;
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+:focus-visible {
+  @include focus-ring;
+}

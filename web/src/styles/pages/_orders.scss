@@ -1,0 +1,6 @@
+@use "../abstracts/variables" as *;
+
+// Create/Edit order pages: keep the form a readable width on wide screens.
+.order-form-card {
+  width: min(560px, 100%);
+}

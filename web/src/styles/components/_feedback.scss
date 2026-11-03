@@ -1,0 +1,42 @@
+@use "../abstracts/variables" as *;
+@use "../abstracts/mixins" as *;
+
+// Loading spinner (components/ui/Spinner.tsx). Pure CSS: a ring with one coloured edge, rotating.
+.spinner {
+  display: inline-block;
+  width: 20px;
+  height: 20px;
+  border: 3px solid $border-color;
+  border-top-color: $primary-color;
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+}
+
+// Respect users who ask their OS to reduce motion.
+@media (prefers-reduced-motion: reduce) {
+  .spinner {
+    animation-duration: 3s;
+  }
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+// Full-screen / full-section loader.
+.spinner-page {
+  @include flex-center;
+  flex: 1;
+  min-height: 200px;
+}
+
+// Used by ErrorState and empty lists: a centred message with an optional action button.
+.state-box {
+  @include flex-center;
+  flex-direction: column;
+  gap: $spacing-sm;
+  padding: $spacing-xl $spacing-md;
+  text-align: center;
+}

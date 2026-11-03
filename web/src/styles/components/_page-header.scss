@@ -1,0 +1,18 @@
+@use "../abstracts/variables" as *;
+
+// Title row at the top of each page: heading on the left, primary action on the right.
+.page-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: $spacing-md;
+  margin-bottom: $spacing-lg;
+}
+
+.pagination {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: $spacing-md;
+  margin-top: $spacing-md;
+}

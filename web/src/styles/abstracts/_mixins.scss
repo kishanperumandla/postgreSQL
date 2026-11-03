@@ -1,0 +1,27 @@
+@use "./variables" as *;
+
+@mixin flex-center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+@mixin respond-mobile {
+  @media (max-width: $breakpoint-mobile) {
+    @content;
+  }
+}
+
+@mixin base-btn {
+  padding: 10px 16px;
+  border-radius: $border-radius;
+  border: unset;
+  cursor: pointer;
+  font-weight: 500;
+}
+
+// Visible keyboard focus. Removing outlines entirely makes the app unusable without a mouse.
+@mixin focus-ring {
+  outline: 2px solid $primary-color;
+  outline-offset: 2px;
+}

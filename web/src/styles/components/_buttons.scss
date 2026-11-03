@@ -1,0 +1,61 @@
+@use "../abstracts/variables" as *;
+@use "../abstracts/mixins" as *;
+
+.btn-primary {
+  @include base-btn;
+  background: $primary-color;
+  color: white;
+}
+
+.btn-primary:hover:not(:disabled) {
+  background: $primary-hover;
+}
+
+.btn-secondary {
+  @include base-btn;
+  background: $surface-color;
+  color: $text-color;
+  border: 1px solid $border-color;
+}
+
+.btn-danger {
+  @include base-btn;
+  background: $danger-color;
+  color: white;
+}
+
+.btn-danger:hover:not(:disabled) {
+  background: $danger-hover;
+}
+
+// Smaller variant for table rows.
+.btn-small {
+  padding: 6px 12px;
+  font-size: 0.875rem;
+}
+
+// Shared disabled look (also used while a request is in flight).
+.btn-primary:disabled,
+.btn-secondary:disabled,
+.btn-danger:disabled {
+  background: gray;
+  color: white;
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
+// Anchor styled like a button (e.g. <Link className="btn-primary">).
+a.btn-primary,
+a.btn-secondary,
+a.btn-danger {
+  display: inline-block;
+  text-decoration: none;
+}
+
+a.btn-primary {
+  color: white;
+}
+
+a.btn-secondary {
+  color: $text-color;
+}

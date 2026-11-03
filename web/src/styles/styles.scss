@@ -1,0 +1,32 @@
+// SINGLE STYLE ENTRY POINT - imported once in src/main.tsx. All CSS in the app lives in this folder.
+// Structure follows the 7-1 pattern from the shared styles boilerplate:
+//   abstracts/  variables, functions, mixins (emit no CSS themselves)
+//   base/       reset, typography, global element styles
+//   layouts/    page-level structure (header, footer, container, shells)
+//   components/ reusable UI pieces (buttons, forms, table, modal ...)
+//   pages/      page-specific styles
+// Add new partials here with @use. Order matters: later rules override earlier ones with equal specificity.
+// (Dropped from the boilerplate: vendors/_bootstrap.scss, compiled styles.css(.map), _home, _triplog.)
+@use "./abstracts/variables";
+@use "./abstracts/mixins";
+
+@use "./base/reset";
+@use "./base/typography";
+@use "./base/global";
+
+@use "./layouts/header";
+@use "./layouts/footer";
+@use "./layouts/container";
+@use "./layouts/app-shell";
+
+@use "./components/buttons";
+@use "./components/cards";
+@use "./components/forms";
+@use "./components/modal";
+@use "./components/navbar";
+@use "./components/table";
+@use "./components/feedback";
+@use "./components/page-header";
+
+@use "./pages/dashboard";
+@use "./pages/orders";
