@@ -26,7 +26,7 @@ usersRouter.get("/", async (_req, res, next) => {
   }
 });
 
-// Get USers by Id
+// Get Users by Id
 usersRouter.get("/:id", async (req, res, next) => {
   const parsed = idParamSchema.safeParse(req.params);
   if (!parsed.success) {
