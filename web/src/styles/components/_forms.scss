@@ -1,0 +1,42 @@
+@use "../abstracts/variables" as *;
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-md;
+}
+
+.form-field {
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-xs;
+}
+
+.form-label {
+  font-weight: 500;
+}
+
+.form-input {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid $border-color;
+  border-radius: $border-radius;
+  background: $surface-color;
+}
+
+// Invalid state is driven by the aria-invalid attribute (set in TextField), so the visual
+// error and the screen-reader announcement can never disagree.
+.form-input[aria-invalid="true"] {
+  border-color: $danger-color;
+}
+
+.form-error {
+  color: $danger-color;
+  font-size: 0.875rem;
+}
+
+.form-actions {
+  display: flex;
+  gap: $spacing-sm;
+  justify-content: flex-end;
+}

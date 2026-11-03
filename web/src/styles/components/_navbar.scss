@@ -1,0 +1,45 @@
+@use "../abstracts/variables" as *;
+@use "../abstracts/mixins" as *;
+
+// (The boilerplate's navbar file only held a global `button { padding: 1rem }`, which would have
+// restyled every button in the app; replaced with real, scoped navbar styles.)
+.navbar {
+  display: flex;
+  gap: $spacing-md;
+
+  // On mobile the nav collapses into a panel under the header, opened by the hamburger button
+  // (Redux ui.mobileNavOpen toggles the `is-open` class).
+  @include respond-mobile {
+    display: none;
+    position: absolute;
+    top: $header-height;
+    left: 0;
+    right: 0;
+    z-index: 10;
+    flex-direction: column;
+    padding: $spacing-md;
+    background: $primary-color;
+
+    &.is-open {
+      display: flex;
+    }
+  }
+}
+
+.navbar-link {
+  padding: $spacing-xs $spacing-sm;
+  border-radius: $border-radius;
+  color: white;
+  opacity: 0.85;
+}
+
+.navbar-link:hover {
+  text-decoration: none;
+  opacity: 1;
+}
+
+// React Router's NavLink adds the `active` class to the link for the current page.
+.navbar-link.active {
+  background: rgb(255 255 255 / 20%);
+  opacity: 1;
+}

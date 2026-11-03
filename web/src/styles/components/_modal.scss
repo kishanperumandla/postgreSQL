@@ -1,0 +1,29 @@
+@use "../abstracts/variables" as *;
+
+// Styles for the native <dialog> used by ConfirmDialog. showModal() gives us, for free: the
+// dimmed ::backdrop, focus trapping, Esc-to-close and "inert" content behind the dialog.
+// (The boilerplate's hand-rolled absolutely-positioned .modal was replaced for that reason.)
+.modal {
+  width: min(440px, calc(100% - 32px));
+  margin: auto; // centres the dialog in the viewport
+  padding: $spacing-lg;
+  border: none;
+  border-radius: $border-radius;
+  box-shadow: 0 10px 30px rgb(0 0 0 / 25%);
+}
+
+.modal::backdrop {
+  background: rgb(0 0 0 / 50%);
+}
+
+.modal-title {
+  margin-bottom: $spacing-sm;
+  font-size: 1.25rem;
+}
+
+.modal-actions {
+  display: flex;
+  gap: $spacing-sm;
+  justify-content: flex-end;
+  margin-top: $spacing-lg;
+}

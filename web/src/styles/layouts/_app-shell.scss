@@ -1,0 +1,29 @@
+@use "../abstracts/variables" as *;
+
+// AppLayout: header + page content + footer. `flex: 1` makes <main> take the leftover height.
+.app-main {
+  flex: 1;
+  padding-block: $spacing-xl;
+}
+
+// AuthLayout: a centred card for login/register.
+.auth-layout {
+  display: flex;
+  flex: 1;
+  align-items: center;
+  justify-content: center;
+  padding: $spacing-lg $spacing-md;
+}
+
+.auth-card {
+  width: min(420px, 100%);
+}
+
+.auth-title {
+  margin-bottom: $spacing-md;
+}
+
+.auth-switch {
+  margin-top: $spacing-md;
+  text-align: center;
+}
