@@ -3,6 +3,7 @@ import cors from "cors";
 import express from "express";
 import { pool } from "./db";
 import { usersRouter } from "./routes/users";
+import { ordersRouter } from "./routes/orders";
 
 const app = express();
 const port = Number(process.env.PORT) || 3000;
@@ -23,6 +24,7 @@ app.get("/health", async (_req, res) => {
 });
 
 app.use("/users", usersRouter);
+app.use("/orders", ordersRouter);
 
 app.listen(port, () => {
   console.log(`API listening on http://localhost:${port}`);
